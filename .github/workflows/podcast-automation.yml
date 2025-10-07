@@ -63,9 +63,17 @@ jobs:
         echo "📁 Organizing summaries for week: $WEEK_DATE"
         mkdir -p "$TARGET_DIR"
 
-        # Copy generated summaries to dashboard folder
+        # Copy and sanitize filenames (remove colons and other invalid chars)
         if [ -d "./output/summaries" ] && [ "$(ls -A ./output/summaries/*.md 2>/dev/null)" ]; then
-          cp ./output/summaries/*.md "$TARGET_DIR/" || true
+          for file in ./output/summaries/*.md; do
+            if [ -f "$file" ]; then
+              # Get basename and sanitize: replace : with - and remove other invalid chars
+              basename=$(basename "$file")
+              sanitized=$(echo "$basename" | sed 's/:/-/g' | sed 's/[<>"|?*]/_/g')
+              cp "$file" "$TARGET_DIR/$sanitized"
+              echo "  Copied: $basename -> $sanitized"
+            fi
+          done
           echo "✅ Copied summaries to $TARGET_DIR"
 
           # Generate metadata.json
