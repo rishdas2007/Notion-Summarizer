@@ -44,15 +44,16 @@ jobs:
         python main.py
         echo "✅ Automation completed!"
 
-    - name: Upload generated files as artifacts
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: podcast-summaries-${{ github.run_number }}
-        path: |
-          ./output/
-          *.log
-        retention-days: 30
+    # Artifact upload disabled due to filename colon issue (not critical)
+    # - name: Upload generated files as artifacts
+    #   if: always()
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: podcast-summaries-${{ github.run_number }}
+    #     path: |
+    #       ./output/
+    #       *.log
+    #     retention-days: 30
 
     - name: Organize summaries for dashboard
       if: success()
