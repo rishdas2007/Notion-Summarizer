@@ -8,22 +8,26 @@ interface WeekPageProps {
   }
 }
 
+// Don't generate pages for params not returned by generateStaticParams
+export const dynamicParams = false
+
 // Generate static params for all weeks
 export async function generateStaticParams() {
   try {
     const weeks = await getSummaryWeeks()
+    if (weeks.length === 0) {
+      console.log('No summaries found yet')
+      return []
+    }
     return weeks.map(week => ({
       date: week.date,
     }))
   } catch (error) {
     // Return empty array if no summaries exist yet
-    console.log('No summaries found, returning empty params')
+    console.log('Error reading summaries:', error)
     return []
   }
 }
-
-// Don't generate pages for params not returned by generateStaticParams
-export const dynamicParams = false
 
 export default async function WeekPage({ params }: WeekPageProps) {
   const weekData = await getWeekSummary(params.date)
