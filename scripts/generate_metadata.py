@@ -21,26 +21,17 @@ import re
 
 
 def extract_title_from_markdown(filepath):
-    """Extract title from markdown file (first H1 or filename)"""
-    try:
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+    """Extract title from markdown filename - the filename IS the title"""
+    # Remove " Summary" suffix if present
+    title = filepath.stem
+    if title.endswith(' Summary'):
+        title = title[:-8]  # Remove " Summary"
 
-            # Try to find first H1 heading
-            h1_match = re.search(r'^#\s+(.+)$', content, re.MULTILINE)
-            if h1_match:
-                return h1_match.group(1).strip()
+    # Replace underscores and multiple spaces with single spaces
+    title = title.replace('_', ' ')
+    title = re.sub(r'\s+', ' ', title).strip()
 
-            # Try to find title in front matter or metadata section
-            title_match = re.search(r'(?:Title|title):\s*(.+)$', content, re.MULTILINE)
-            if title_match:
-                return title_match.group(1).strip()
-
-    except Exception as e:
-        print(f"Warning: Could not read {filepath}: {e}")
-
-    # Fallback to filename
-    return filepath.stem.replace('_', ' ').replace('-', ' ').title()
+    return title
 
 
 def generate_metadata(target_dir):
