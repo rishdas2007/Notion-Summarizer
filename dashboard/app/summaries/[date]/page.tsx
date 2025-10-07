@@ -37,53 +37,52 @@ export default async function WeekPage({ params }: WeekPageProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
+    <div style={{ background: 'var(--background)' }} className="py-8 sm:py-12 min-h-screen">
+      <div className="container-custom max-w-5xl">
         {/* Header */}
         <div className="mb-8">
           <a
             href="/summaries"
-            className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4"
+            className="inline-flex items-center mb-4 font-medium hover:opacity-80 transition-opacity"
+            style={{ color: 'var(--primary)' }}
           >
             <svg
               className="w-5 h-5 mr-2"
               fill="none"
               stroke="currentColor"
+              strokeWidth={2}
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
                 d="M10 19l-7-7m0 0l7-7m-7 7h18"
               />
             </svg>
             Back to Archive
           </a>
 
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
             Week of {formatDate(weekData.date)}
           </h1>
-          <p className="text-gray-600">
+          <p className="text-base sm:text-lg" style={{ color: 'var(--text-secondary)' }}>
             {weekData.episodeCount} {weekData.episodeCount === 1 ? 'episode' : 'episodes'} summarized
           </p>
         </div>
 
         {/* Episodes */}
-        <div className="space-y-12">
+        <div className="space-y-8 sm:space-y-12">
           {weekData.episodes.map((episode, index) => (
             <article
               key={index}
-              className="bg-white rounded-lg shadow-md p-8 border border-gray-200"
+              className="card p-6 sm:p-8"
             >
               <div className="mb-6">
-                <div className="flex items-center space-x-2 text-sm text-gray-500 mb-2">
+                <div className="flex items-center space-x-2 text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
                   <svg
                     className="w-4 h-4"
                     fill="currentColor"
                     viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
                       fillRule="evenodd"
@@ -91,14 +90,14 @@ export default async function WeekPage({ params }: WeekPageProps) {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span>Episode {index + 1} of {weekData.episodeCount}</span>
+                  <span className="font-medium">Episode {index + 1} of {weekData.episodeCount}</span>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl sm:text-3xl font-bold leading-tight" style={{ color: 'var(--text-primary)' }}>
                   {episode.title}
                 </h2>
               </div>
 
-              <div className="prose prose-slate max-w-none">
+              <div className="markdown-content">
                 <MarkdownRenderer content={episode.content || 'Content not available'} />
               </div>
             </article>
@@ -106,23 +105,27 @@ export default async function WeekPage({ params }: WeekPageProps) {
         </div>
 
         {/* Navigation */}
-        <div className="mt-12 pt-8 border-t border-gray-200">
-          <div className="flex justify-between items-center">
+        <div className="mt-12 pt-8" style={{ borderTop: '1px solid var(--border)' }}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-between">
             <a
               href="/summaries"
-              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+              className="btn inline-flex items-center justify-center"
+              style={{
+                background: 'transparent',
+                border: '2px solid var(--border)',
+                color: 'var(--text-primary)'
+              }}
             >
               <svg
                 className="w-5 h-5 mr-2"
                 fill="none"
                 stroke="currentColor"
+                strokeWidth={2}
                 viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>
@@ -130,23 +133,22 @@ export default async function WeekPage({ params }: WeekPageProps) {
             </a>
             <a
               href="/"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              className="btn btn-primary inline-flex items-center justify-center"
             >
-              Home
               <svg
-                className="w-5 h-5 ml-2"
+                className="w-5 h-5 mr-2"
                 fill="none"
                 stroke="currentColor"
+                strokeWidth={2}
                 viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
                   d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                 />
               </svg>
+              Home
             </a>
           </div>
         </div>
