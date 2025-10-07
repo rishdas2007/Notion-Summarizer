@@ -73,37 +73,74 @@ export default async function Home() {
           </div>
         ) : (
           <>
-            {/* Summary Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {/* Summary Grid - Latest 6 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
               {latestWeeks.map(week => (
                 <SummaryCard key={week.date} week={week} />
               ))}
             </div>
 
-            {/* View More Button */}
-            {weeks.length > 6 && (
-              <div className="text-center">
-                <a
-                  href="/summaries"
-                  className="btn btn-primary inline-flex items-center"
-                >
-                  View All {weeks.length} Weeks
-                  <svg
-                    className="ml-2 w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </svg>
-                </a>
+            {/* Table of Contents - All Summaries */}
+            <div className="card p-6 sm:p-8 mb-12">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                  All Summaries
+                </h2>
+                <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{
+                  background: 'var(--primary)',
+                  color: 'white'
+                }}>
+                  {weeks.length} {weeks.length === 1 ? 'Week' : 'Weeks'}
+                </span>
               </div>
-            )}
+
+              <div className="space-y-3">
+                {weeks.map((week, index) => (
+                  <a
+                    key={week.date}
+                    href={week.path}
+                    className="block p-4 rounded-lg transition-all hover:shadow-md"
+                    style={{
+                      background: index % 2 === 0 ? 'var(--background)' : 'transparent',
+                      border: '1px solid var(--border)'
+                    }}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-1">
+                          <span className="font-semibold text-lg" style={{ color: 'var(--text-primary)' }}>
+                            Week of {new Date(week.date).toLocaleDateString('en-US', {
+                              month: 'long',
+                              day: 'numeric',
+                              year: 'numeric'
+                            })}
+                          </span>
+                          <span className="px-2 py-0.5 rounded text-xs font-medium" style={{
+                            background: 'var(--accent)',
+                            color: 'white'
+                          }}>
+                            {week.episodeCount} {week.episodeCount === 1 ? 'episode' : 'episodes'}
+                          </span>
+                        </div>
+                        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                          {week.episodes.slice(0, 2).map(ep => ep.title).join(' • ')}
+                          {week.episodes.length > 2 && ` • +${week.episodes.length - 2} more`}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span className="hidden sm:inline">{week.date}</span>
+                        <svg className="w-5 h-5 ml-2" style={{ color: 'var(--primary)' }} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
           </>
         )}
       </div>
