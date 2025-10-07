@@ -17,7 +17,9 @@ An advanced automation system that extracts podcast episodes from Notion, conver
 - 🔄 **Automatic Processing**: Fetches episodes from last 7 days automatically
 - 🛡️ **Production Ready**: Environment-based config, comprehensive error handling
 - 📝 **Rich Output**: Executive summaries, detailed analysis, key insights, citations
-- 🌐 **Live Dashboard**: Static Next.js site with weekly summaries (auto-deploys to Vercel)
+- 🌐 **Live Dashboard**: Modern Next.js dashboard with weekly summaries, mobile-optimized UI
+- ☁️ **Cloud Automation**: GitHub Actions runs weekly, auto-commits summaries, deploys to Vercel
+- 📱 **Mobile Responsive**: Professional gradient design, optimized for all screen sizes
 
 ## Quick Start
 
@@ -192,23 +194,96 @@ Grant your integration access to the database.
 
 ## Troubleshooting
 
-### "Configuration errors"
+### Local Execution Issues
+
+**"Configuration errors"**
 - Verify `.env` file exists and contains all required variables
 - Check that environment variables are properly set
 
-### "No episodes found"
+**"No episodes found"**
 - Check date range in logs (last 7 days)
 - Verify Notion database has recent episodes
 - Confirm integration has database access
 
-### "Claude API error"
+**"Claude API error"**
 - Verify `ANTHROPIC_API_KEY` is correct
 - Check API quota/limits at console.anthropic.com
 - Review logs for specific error messages
 
-### "Summary already exists, skipping"
+**"Summary already exists, skipping"**
 - This is normal behavior (prevents duplicates)
 - Delete existing summary file to regenerate
+
+### Dashboard Issues
+
+**"404 Page Not Found" on summary pages**
+- Ensure `dashboard/app/summaries/[date]/page.tsx` exists (not `_date_disabled`)
+- Check that `public/summaries/YYYY-MM-DD/metadata.json` exists
+- Verify Vercel deployment completed successfully
+
+**"Build failed" on Vercel**
+- Check build logs for TypeScript errors
+- Ensure all dependencies in `dashboard/package.json` are installed
+- Verify `dashboard/tsconfig.json` has `"baseUrl": "."`
+- Check that `.gitignore` has `/lib/` (not `lib/`) to allow dashboard/lib/
+
+**"Mobile text barely visible"**
+- ✅ Fixed! Updated to use CSS variables for proper contrast
+- Ensure you're on latest commit with mobile optimizations
+
+**"Wrong episode titles in metadata"**
+- ✅ Fixed! `generate_metadata.py` now uses filenames instead of H1 headers
+- Re-run workflow or regenerate metadata to apply fix
+
+### GitHub Actions Issues
+
+**"Permission denied" when pushing commits**
+- Go to repo Settings → Actions → General → Workflow permissions
+- Select "Read and write permissions"
+- Save and re-run workflow
+
+**"Artifact upload failed" with colon errors**
+- ✅ Fixed! Workflow now sanitizes filenames (removes colons)
+- Ensure using latest `.github/workflows/podcast-automation.yml`
+
+**"Secrets not found"**
+- Add all required secrets in repo Settings → Secrets and variables → Actions:
+  - `NOTION_TOKEN`
+  - `NOTION_DATABASE_ID`
+  - `ANTHROPIC_API_KEY`
+
+## Live Dashboard 🚀
+
+**View your podcast summaries at**: Your Vercel deployment URL
+
+### Dashboard Features
+
+- 📊 **Weekly Archive**: All summaries organized by week
+- 📱 **Mobile Optimized**: Responsive design with CSS variables for perfect mobile readability
+- 🎨 **Modern UI**: Professional gradient header, card-based layout, smooth animations
+- 📑 **Table of Contents**: Quick navigation to all weeks on homepage
+- ⚡ **Lightning Fast**: Static site generation for instant page loads
+- 🔄 **Auto-Deploy**: Vercel automatically rebuilds when new summaries are committed
+
+### Dashboard Architecture
+
+```
+dashboard/
+├── app/
+│   ├── layout.tsx              # Root layout with header/footer
+│   ├── page.tsx                # Homepage with hero + table of contents
+│   ├── globals.css             # CSS variables for theming
+│   └── summaries/[date]/
+│       └── page.tsx            # Individual week summary page
+├── components/
+│   └── MarkdownRenderer.tsx    # Markdown content renderer
+├── lib/
+│   └── summaries.ts            # Data fetching utilities
+└── public/summaries/
+    └── YYYY-MM-DD/             # Weekly summaries (auto-generated)
+        ├── metadata.json       # Episode metadata
+        └── *.md                # Individual episode summaries
+```
 
 ## Deployment Options
 
@@ -217,36 +292,56 @@ Grant your integration access to the database.
 **Complete cloud solution** - Automation runs weekly, summaries appear on live dashboard!
 
 **Setup Overview**:
-1. **Automation**: GitHub Actions runs every Sunday
-   - Processes new episodes
-   - Generates AI summaries
-   - Commits to repository
+1. **Automation**: GitHub Actions runs every Sunday at 9 AM
+   - Processes new episodes from Notion
+   - Generates AI summaries with Claude
+   - Organizes summaries by week (YYYY-MM-DD)
+   - Generates metadata.json for each week
+   - Commits everything to repository
    - See [docs/GITHUB_ACTIONS_SETUP.md](docs/GITHUB_ACTIONS_SETUP.md)
 
 2. **Dashboard**: Vercel hosts the live site
-   - Static Next.js dashboard
-   - Shows all weekly summaries
-   - Auto-deploys on git push
+   - Static Next.js 14 dashboard (App Router)
+   - Shows all weekly summaries with mobile-optimized UI
+   - Auto-deploys on git push (2-3 minute builds)
+   - Professional gradient design with CSS variables
    - See [docs/DASHBOARD_SETUP.md](docs/DASHBOARD_SETUP.md)
 
 **Benefits**:
 - ✅ Fully automated in cloud
-- ✅ Free for public repos
-- ✅ Live public dashboard
+- ✅ Free for public repos (GitHub + Vercel free tiers)
+- ✅ Live public dashboard with custom domain support
 - ✅ No local machine needed
 - ✅ Growing archive over time
+- ✅ Mobile-responsive design
+- ✅ Automatic weekly updates
 
 **Quick Dashboard Setup**:
 ```bash
 # 1. Go to vercel.com/new
-# 2. Import GitHub repo: rishdas2007/Notion-Summarizer
+# 2. Import GitHub repo
 # 3. Configure:
 #    - Root Directory: dashboard
 #    - Framework: Next.js
+#    - Build Command: npm run build (default)
+#    - Output Directory: out (default)
 # 4. Deploy!
 ```
 
 Dashboard will be live at: `https://your-project.vercel.app`
+
+**GitHub Actions Setup**:
+```bash
+# 1. Add repository secrets:
+#    - NOTION_TOKEN
+#    - NOTION_DATABASE_ID
+#    - ANTHROPIC_API_KEY
+# 2. Set repository permissions:
+#    Settings → Actions → General → Workflow permissions
+#    → Read and write permissions
+# 3. Workflow runs automatically every Sunday at 9 AM
+# 4. Or trigger manually: Actions → Podcast Automation → Run workflow
+```
 
 ### Option 2: Local Cron Job
 

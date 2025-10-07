@@ -60,6 +60,7 @@ Podcast_Notes/
 !.env.example
 !DASHBOARD_QUICKSTART.md
 !dashboard/**/*.md
+!docs/**/*.md
 
 # Dashboard (Next.js)
 dashboard/node_modules/
