@@ -46,7 +46,7 @@ jobs:
 
     - name: Upload generated files as artifacts
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: podcast-summaries-${{ github.run_number }}
         path: |
