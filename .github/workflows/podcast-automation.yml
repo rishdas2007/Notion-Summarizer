@@ -54,6 +54,42 @@ jobs:
           *.log
         retention-days: 30
 
+    - name: Organize summaries for dashboard
+      if: success()
+      run: |
+        WEEK_DATE=$(date +%Y-%m-%d)
+        TARGET_DIR="dashboard/public/summaries/$WEEK_DATE"
+
+        echo "📁 Organizing summaries for week: $WEEK_DATE"
+        mkdir -p "$TARGET_DIR"
+
+        # Copy generated summaries to dashboard folder
+        if [ -d "./output/summaries" ] && [ "$(ls -A ./output/summaries/*.md 2>/dev/null)" ]; then
+          cp ./output/summaries/*.md "$TARGET_DIR/" || true
+          echo "✅ Copied summaries to $TARGET_DIR"
+
+          # Generate metadata.json
+          python3 scripts/generate_metadata.py "$TARGET_DIR"
+        else
+          echo "⚠️ No summaries found to organize"
+        fi
+
+    - name: Commit summaries to repository
+      if: success()
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "actions@github.com"
+        git add dashboard/public/summaries/
+
+        if git diff --staged --quiet; then
+          echo "No new summaries to commit"
+        else
+          WEEK_DATE=$(date +%Y-%m-%d)
+          git commit -m "Add podcast summaries for week of $WEEK_DATE"
+          git push
+          echo "✅ Pushed summaries to repository"
+        fi
+
     - name: Display summary
       if: always()
       run: |
@@ -70,5 +106,9 @@ jobs:
           echo "- **Summaries generated:** $SUMMARY_COUNT" >> $GITHUB_STEP_SUMMARY
         fi
 
+        WEEK_DATE=$(date +%Y-%m-%d)
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Week:** $WEEK_DATE" >> $GITHUB_STEP_SUMMARY
+        echo "- **Dashboard:** Will be deployed to Vercel automatically" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "✅ Workflow completed successfully!" >> $GITHUB_STEP_SUMMARY

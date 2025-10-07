@@ -58,6 +58,19 @@ Podcast_Notes/
 *.md
 !README.md
 !.env.example
+!DASHBOARD_QUICKSTART.md
+!dashboard/**/*.md
+
+# Dashboard (Next.js)
+dashboard/node_modules/
+dashboard/.next/
+dashboard/out/
+dashboard/.vercel/
+dashboard/*.tsbuildinfo
+
+# Keep dashboard summaries (these should be committed)
+!dashboard/public/summaries/**/*.md
+!dashboard/public/summaries/**/metadata.json
 
 # Temporary files
 *.tmp

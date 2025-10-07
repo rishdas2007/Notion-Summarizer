@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+"""
+Generate metadata.json for a week's podcast summaries.
+
+This script scans a directory for markdown files and creates a metadata.json
+file containing information about all the episodes in that week.
+
+Usage:
+    python3 generate_metadata.py <target_directory>
+
+Example:
+    python3 generate_metadata.py dashboard/public/summaries/2025-01-07
+"""
+
+import os
+import sys
+import json
+from pathlib import Path
+from datetime import datetime
+import re
+
+
+def extract_title_from_markdown(filepath):
+    """Extract title from markdown file (first H1 or filename)"""
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+            # Try to find first H1 heading
+            h1_match = re.search(r'^#\s+(.+)$', content, re.MULTILINE)
+            if h1_match:
+                return h1_match.group(1).strip()
+
+            # Try to find title in front matter or metadata section
+            title_match = re.search(r'(?:Title|title):\s*(.+)$', content, re.MULTILINE)
+            if title_match:
+                return title_match.group(1).strip()
+
+    except Exception as e:
+        print(f"Warning: Could not read {filepath}: {e}")
+
+    # Fallback to filename
+    return filepath.stem.replace('_', ' ').replace('-', ' ').title()
+
+
+def generate_metadata(target_dir):
+    """Generate metadata.json for a week's summaries"""
+    target_path = Path(target_dir)
+
+    if not target_path.exists():
+        print(f"Error: Directory {target_dir} does not exist")
+        sys.exit(1)
+
+    # Find all markdown files
+    markdown_files = list(target_path.glob("*.md"))
+
+    if not markdown_files:
+        print(f"Warning: No markdown files found in {target_dir}")
+        episodes = []
+    else:
+        episodes = []
+        for md_file in sorted(markdown_files):
+            title = extract_title_from_markdown(md_file)
+            episodes.append({
+                'filename': md_file.name,
+                'title': title
+            })
+            print(f"Found episode: {title} ({md_file.name})")
+
+    # Create metadata
+    metadata = {
+        'episodeCount': len(episodes),
+        'episodes': episodes,
+        'generatedAt': datetime.now().isoformat()
+    }
+
+    # Write metadata.json
+    metadata_path = target_path / 'metadata.json'
+    with open(metadata_path, 'w', encoding='utf-8') as f:
+        json.dump(metadata, f, indent=2, ensure_ascii=False)
+
+    print(f"\n✅ Generated {metadata_path}")
+    print(f"   Episodes: {len(episodes)}")
+    print(f"   Timestamp: {metadata['generatedAt']}")
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print("Usage: python3 generate_metadata.py <target_directory>")
+        print("Example: python3 generate_metadata.py dashboard/public/summaries/2025-01-07")
+        sys.exit(1)
+
+    generate_metadata(sys.argv[1])

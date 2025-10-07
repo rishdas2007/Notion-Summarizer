@@ -17,6 +17,7 @@ An advanced automation system that extracts podcast episodes from Notion, conver
 - 🔄 **Automatic Processing**: Fetches episodes from last 7 days automatically
 - 🛡️ **Production Ready**: Environment-based config, comprehensive error handling
 - 📝 **Rich Output**: Executive summaries, detailed analysis, key insights, citations
+- 🌐 **Live Dashboard**: Static Next.js site with weekly summaries (auto-deploys to Vercel)
 
 ## Quick Start
 
@@ -92,9 +93,20 @@ podcast-automation/
 ├── requirements.txt            # Python dependencies
 ├── .env.example               # Configuration template
 ├── .gitignore                 # Security & cleanup
+├── dashboard/                  # Next.js dashboard
+│   ├── app/                   # Next.js App Router pages
+│   ├── components/            # React components
+│   ├── lib/                   # Data fetching utilities
+│   └── public/summaries/      # Generated summaries (by GitHub Actions)
+├── scripts/
+│   └── generate_metadata.py  # Creates metadata.json for dashboard
+├── .github/workflows/
+│   └── podcast-automation.yml # Cloud automation + dashboard deployment
 └── docs/
     ├── PROJECT_NOTES.md       # Detailed project documentation
-    └── ARCHITECTURE.md        # System design details
+    ├── ARCHITECTURE.md        # System design details
+    ├── GITHUB_ACTIONS_SETUP.md # Cloud automation setup
+    └── DASHBOARD_SETUP.md     # Dashboard deployment guide
 ```
 
 ## Usage
@@ -200,22 +212,41 @@ Grant your integration access to the database.
 
 ## Deployment Options
 
-### Option 1: GitHub Actions (Cloud Automation) ⭐ Recommended
+### Option 1: GitHub Actions + Vercel Dashboard ⭐ Recommended
 
-Run automatically in the cloud every week - no local machine needed!
+**Complete cloud solution** - Automation runs weekly, summaries appear on live dashboard!
 
-**Setup in 3 steps**:
-1. Push code to GitHub
-2. Add secrets (Notion + Anthropic API keys)
-3. Enable Actions - runs every Sunday automatically
+**Setup Overview**:
+1. **Automation**: GitHub Actions runs every Sunday
+   - Processes new episodes
+   - Generates AI summaries
+   - Commits to repository
+   - See [docs/GITHUB_ACTIONS_SETUP.md](docs/GITHUB_ACTIONS_SETUP.md)
 
-**Full guide**: See [docs/GITHUB_ACTIONS_SETUP.md](docs/GITHUB_ACTIONS_SETUP.md)
+2. **Dashboard**: Vercel hosts the live site
+   - Static Next.js dashboard
+   - Shows all weekly summaries
+   - Auto-deploys on git push
+   - See [docs/DASHBOARD_SETUP.md](docs/DASHBOARD_SETUP.md)
 
 **Benefits**:
 - ✅ Fully automated in cloud
 - ✅ Free for public repos
-- ✅ Downloadable artifacts
+- ✅ Live public dashboard
 - ✅ No local machine needed
+- ✅ Growing archive over time
+
+**Quick Dashboard Setup**:
+```bash
+# 1. Go to vercel.com/new
+# 2. Import GitHub repo: rishdas2007/Notion-Summarizer
+# 3. Configure:
+#    - Root Directory: dashboard
+#    - Framework: Next.js
+# 4. Deploy!
+```
+
+Dashboard will be live at: `https://your-project.vercel.app`
 
 ### Option 2: Local Cron Job
 
