@@ -198,6 +198,51 @@ Grant your integration access to the database.
 - This is normal behavior (prevents duplicates)
 - Delete existing summary file to regenerate
 
+## Deployment Options
+
+### Option 1: GitHub Actions (Cloud Automation) ⭐ Recommended
+
+Run automatically in the cloud every week - no local machine needed!
+
+**Setup in 3 steps**:
+1. Push code to GitHub
+2. Add secrets (Notion + Anthropic API keys)
+3. Enable Actions - runs every Sunday automatically
+
+**Full guide**: See [docs/GITHUB_ACTIONS_SETUP.md](docs/GITHUB_ACTIONS_SETUP.md)
+
+**Benefits**:
+- ✅ Fully automated in cloud
+- ✅ Free for public repos
+- ✅ Downloadable artifacts
+- ✅ No local machine needed
+
+### Option 2: Local Cron Job
+
+Run automatically on your computer:
+
+```bash
+# Edit crontab
+crontab -e
+
+# Add this line for every Sunday at 9 AM
+0 9 * * 0 cd "/path/to/podcast-automation" && python3 main.py
+```
+
+**Benefits**:
+- ✅ Direct Obsidian vault integration
+- ✅ No cloud dependency
+- ✅ Full local control
+
+### Option 3: Manual Execution
+
+Run whenever you want:
+
+```bash
+cd "/path/to/podcast-automation"
+python3 main.py
+```
+
 ## Development
 
 ### Project Structure
@@ -208,6 +253,7 @@ Grant your integration access to the database.
 - `intelligent_parser.py` - Content compression algorithm
 - `batch_summary_generator.py` - AI summarization engine
 - `main.py` - Orchestration and workflow
+- `.github/workflows/` - GitHub Actions automation
 
 ### Adding New Features
 

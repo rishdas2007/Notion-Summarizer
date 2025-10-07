@@ -1,0 +1,74 @@
+name: Podcast Automation
+
+on:
+  # Run every Sunday at 9 AM UTC (adjust timezone as needed)
+  schedule:
+    - cron: '0 9 * * 0'
+
+  # Allow manual triggering from GitHub UI
+  workflow_dispatch:
+    inputs:
+      days_back:
+        description: 'Number of days to look back (default: 7)'
+        required: false
+        default: '7'
+
+jobs:
+  process-podcasts:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run podcast automation
+      env:
+        NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        OUTPUT_FOLDER: ./output/podcast_notes
+        OBSIDIAN_FOLDER: ./output/summaries
+      run: |
+        echo "🚀 Starting podcast automation..."
+        python main.py
+        echo "✅ Automation completed!"
+
+    - name: Upload generated files as artifacts
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: podcast-summaries-${{ github.run_number }}
+        path: |
+          ./output/
+          *.log
+        retention-days: 30
+
+    - name: Display summary
+      if: always()
+      run: |
+        echo "## 📊 Podcast Automation Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        if [ -d "./output/podcast_notes" ]; then
+          EPISODE_COUNT=$(ls -1 ./output/podcast_notes/*.md 2>/dev/null | wc -l)
+          echo "- **Episodes processed:** $EPISODE_COUNT" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        if [ -d "./output/summaries" ]; then
+          SUMMARY_COUNT=$(ls -1 ./output/summaries/*.md 2>/dev/null | wc -l)
+          echo "- **Summaries generated:** $SUMMARY_COUNT" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "✅ Workflow completed successfully!" >> $GITHUB_STEP_SUMMARY
