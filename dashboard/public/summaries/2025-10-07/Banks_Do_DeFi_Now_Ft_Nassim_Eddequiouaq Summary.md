@@ -1,13 +1,3 @@
-# Major Sub-Tasks for Summarization
-
-- **Extract and organize core discussion topics** from the podcast transcript, identifying the main themes around stablecoin issuance, DeFi integration, and institutional adoption
-- **Identify key stakeholders and their perspectives** (Visa, Stripe, financial institutions, neobanks, wallet providers) and synthesize their strategic rationales
-- **Trace the evolution of arguments** regarding stablecoin business models, interoperability challenges, and the shift from payments to lending use cases
-- **Capture technical and regulatory context** including smart contract functionality, compliance considerations, and the GENIUS Act implications
-- **Synthesize market signals and trends** from specific company announcements and their broader implications for the financial services ecosystem
-
----
-
 # Banks Do DeFi Now: Stablecoin Adoption and Institutional Integration
 
 ## Table of Contents

@@ -1,13 +1,3 @@
-# Checklist for Summarization
-
-- **Identify the document's structural organization** – Determine how the interview/transcript is organized (chronologically, thematically by topic) and map the major discussion areas
-- **Extract core arguments and regulatory narrative** – Trace Kalshi's regulatory journey, legal strategy, and the evolution of prediction markets from illegal to mainstream
-- **Analyze business model distinctions** – Clarify how Kalshi differentiates itself from gambling/sports betting and from competitors like Polymarket
-- **Synthesize institutional adoption strategy** – Document the path from retail to institutional use, including market maker relationships and liquidity requirements
-- **Capture vision and future direction** – Identify Kalshi's long-term goals for market expansion, on-chain integration, and regulatory frontiers
-
----
-
 # Tarek Mansour on Kalshi's Plan to Create Markets in Everything
 
 ## Table of Contents
