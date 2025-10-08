@@ -70,11 +70,47 @@ export default async function WeekPage({ params }: WeekPageProps) {
           </p>
         </div>
 
+        {/* Table of Contents */}
+        <div className="card p-6 sm:p-8 mb-8">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+            Episodes This Week
+          </h2>
+          <nav className="space-y-3">
+            {weekData.episodes.map((episode, index) => (
+              <a
+                key={index}
+                href={`#episode-${index}`}
+                className="block p-3 rounded-lg transition-all hover:translate-x-1"
+                style={{
+                  background: 'var(--background)',
+                  border: '1px solid var(--border)',
+                }}
+              >
+                <div className="flex items-start gap-3">
+                  <span
+                    className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
+                    style={{
+                      background: 'var(--primary)',
+                      color: 'white'
+                    }}
+                  >
+                    {index + 1}
+                  </span>
+                  <span className="font-medium leading-snug" style={{ color: 'var(--text-primary)' }}>
+                    {episode.title}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </nav>
+        </div>
+
         {/* Episodes */}
         <div className="space-y-8 sm:space-y-12">
           {weekData.episodes.map((episode, index) => (
             <article
               key={index}
+              id={`episode-${index}`}
               className="card p-6 sm:p-8"
             >
               <div className="mb-6">
