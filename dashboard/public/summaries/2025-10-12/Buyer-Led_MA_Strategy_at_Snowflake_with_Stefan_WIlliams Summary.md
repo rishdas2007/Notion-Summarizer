@@ -1,4 +1,3 @@
-```markdown
 # Buyer-Led M&A™ Strategy at Snowflake with Stefan Williams
 
 ## Table of Contents
@@ -437,4 +436,3 @@ The integration of M&A, venture, and startup programs under unified leadership c
 - Key statistics and timelines documented
 - No critical gaps identified in coverage
 - Uncertainty acknowledged where Williams provided qualified responses (e.g., "I don't think so" regarding banker-originated deals)
-```

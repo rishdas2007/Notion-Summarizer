@@ -1,4 +1,3 @@
-```markdown
 # Banks Do DeFi Now Ft. Nassim Eddequiouaq
 
 ## Table of Contents
@@ -617,4 +616,3 @@ Taylor concluded: "Imagine how efficient that would be at SWIFT scale. And imagi
 ### Validation Notes
 
 This summary comprehensively covers all major discussion topics from the episode transcript. The document structure follows the chronological flow of the conversation while organizing content thematically for clarity. All direct quotations are accurately transcribed from the source material. Data points are presented as stated by participants, though some figures (particularly future dates and projections) should be noted as forward-looking statements subject to change. The episode date appears to contain an error (published as 2025-10-06 but discussed as current events), suggesting either a transcription error or the document represents planned future content.
-```
