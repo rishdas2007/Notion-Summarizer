@@ -111,60 +111,97 @@ body {
 .markdown-content {
   @apply prose prose-slate dark:prose-invert max-w-none;
   color: var(--text-primary);
+  background: transparent !important;
 }
 
 .markdown-content h1 {
   @apply text-3xl font-bold mt-8 mb-4;
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
+  background: transparent !important;
 }
 
 .markdown-content h2 {
   @apply text-2xl font-bold mt-6 mb-3;
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
+  background: transparent !important;
 }
 
 .markdown-content h3 {
   @apply text-xl font-semibold mt-4 mb-2;
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
+  background: transparent !important;
+}
+
+.markdown-content h4 {
+  @apply text-lg font-semibold mt-3 mb-2;
+  color: var(--text-primary) !important;
 }
 
 .markdown-content p {
   @apply mb-4 leading-relaxed;
-  color: var(--text-secondary);
+  color: var(--text-secondary) !important;
+  background: transparent !important;
 }
 
 .markdown-content ul {
-  @apply list-disc list-inside mb-4 space-y-2;
+  @apply list-disc mb-4 space-y-2;
+  padding-left: 1.5rem;
+  color: var(--text-secondary);
 }
 
 .markdown-content ol {
-  @apply list-decimal list-inside mb-4 space-y-2;
+  @apply list-decimal mb-4 space-y-2;
+  padding-left: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.markdown-content li {
+  color: var(--text-secondary);
+  background: transparent !important;
 }
 
 .markdown-content blockquote {
   @apply border-l-4 pl-4 italic my-4;
   border-color: var(--primary);
   color: var(--text-secondary);
+  background: transparent !important;
 }
 
 .markdown-content code {
-  @apply px-1 py-0.5 rounded text-sm;
-  background: var(--background);
-  color: var(--accent);
+  @apply px-1.5 py-0.5 rounded text-sm;
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: var(--accent) !important;
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
 }
 
 .markdown-content pre {
   @apply p-4 rounded overflow-x-auto mb-4;
-  background: var(--background);
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.markdown-content pre code {
+  background: transparent !important;
+  padding: 0;
 }
 
 .markdown-content a {
-  color: var(--primary);
+  color: var(--primary) !important;
   text-decoration: underline;
+  background: transparent !important;
 }
 
 .markdown-content a:hover {
-  color: var(--primary-dark);
+  color: var(--primary-dark) !important;
+}
+
+.markdown-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.markdown-content em {
+  color: var(--text-secondary);
+  font-style: italic;
 }
 
 /* Empty state */
