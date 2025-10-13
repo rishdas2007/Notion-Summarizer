@@ -60,6 +60,30 @@ class BatchSummaryGenerator:
         logging.info(f"Found {len(recent_files)} recent episode files from {start_date} to {today}")
         return recent_files
 
+    def strip_markdown_code_block(self, text):
+        """Remove markdown code block wrapper if present"""
+        text = text.strip()
+
+        # Check if wrapped in ```markdown ... ```
+        if text.startswith('```markdown') or text.startswith('```md'):
+            # Remove first line
+            lines = text.split('\n')
+            lines = lines[1:]
+
+            # Remove last line if it's ```
+            if lines and lines[-1].strip() == '```':
+                lines = lines[:-1]
+
+            text = '\n'.join(lines)
+
+        # Also check for plain ``` wrapper
+        elif text.startswith('```') and text.endswith('```'):
+            lines = text.split('\n')
+            if len(lines) > 2:
+                text = '\n'.join(lines[1:-1])
+
+        return text.strip()
+
     def create_summary_v7_prompt(self):
         """Create the Summary v7 prompt template using shared config"""
         return f"""{CLAUDE_SYSTEM_PROMPT}
@@ -70,13 +94,13 @@ TEXT:
 
 ## Output Format
 
-- If the input document or text is missing, malformed, or below 4,000 words, reply with a single markdown code block containing:
-  ```markdown
+IMPORTANT: Output the summary as raw markdown text. Do NOT wrap the entire summary in a code block (```markdown). The summary will be saved directly to a .md file.
+
+- If the input document or text is missing, malformed, or below 4,000 words, reply with:
   ## Error: Document Not Suitable for Summarization
   The input document is either missing, unparseable, or does not meet the minimum length requirement of 4,000 words.
-  ```
 
-- For valid input, produce a single markdown-formatted string for the summary file. The summary must include these required top-level sections (omit those not applicable, but always include at least Sections 1–4):
+- For valid input, produce a markdown-formatted summary starting directly with the title. The summary must include these required top-level sections (omit those not applicable, but always include at least Sections 1–4):
 
   1. `# Title` (from the document)
   2. `## Table of Contents` (logical sections as links)
@@ -91,7 +115,7 @@ TEXT:
 - Omit sections only if not relevant but retain the original order. Headings should use clear markdown and anchoring.
 - Note uncertainty or gaps at the appropriate points in the summary.
 - If the document is non-chronological, explain its organizational logic (e.g., thematic or conceptual structure) in `## Detailed Analysis`.
-- Always output a single markdown-formatted string as the summary. Do not attach files or include download links; render the summary for inline viewing only."""
+- Output raw markdown text only. The first line should be `# Title`, not ` ```markdown `."""
 
     def extract_podcast_title(self, filepath):
         """Extract podcast title from the episode file content"""
@@ -174,8 +198,12 @@ TEXT:
                     }
                 ]
             )
-            
-            return response.content[0].text
+
+            # Strip markdown code block wrapper if present
+            summary_text = response.content[0].text
+            summary_text = self.strip_markdown_code_block(summary_text)
+
+            return summary_text
             
         except Exception as e:
             logging.error(f"❌ Error generating summary for {os.path.basename(episode_file)}: {e}")
@@ -249,7 +277,12 @@ Focus on cross-episode synthesis and pattern recognition. Identify themes that s
             )
 
             logging.info(f"✅ API call completed successfully")
-            return response.content[0].text
+
+            # Strip markdown code block wrapper if present
+            summary_text = response.content[0].text
+            summary_text = self.strip_markdown_code_block(summary_text)
+
+            return summary_text
 
         except Exception as e:
             logging.error(f"❌ Error generating batch summary: {e}")
