@@ -186,11 +186,13 @@ All configuration via environment variables (see `.env.example`):
 Your Notion database should have these properties:
 
 - **Episode** (Title) - Main episode title
-- **Episode publish date** (Date) - Publication date
+- **Last snip date** (Date) - When you listened to the episode (used for weekly filtering)
 - **Show** (Rich text) - Podcast show name
 - **Content** (Page body) - Full episode notes
 
 Grant your integration access to the database.
+
+**Note**: The system filters episodes by "Last snip date" (when you listened) rather than "Episode publish date". This ensures you get summaries for podcasts you actually listened to each week, regardless of when they were published.
 
 ## Troubleshooting
 
