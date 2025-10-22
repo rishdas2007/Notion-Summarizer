@@ -1,5 +1,5 @@
 {
-  "episodeCount": 2,
+  "episodeCount": 3,
   "episodes": [
     {
       "filename": "Banks_Do_DeFi_Now_Ft_Nassim_Eddequiouaq Summary.md",
@@ -8,7 +8,11 @@
     {
       "filename": "Buyer-Led_MA_Strategy_at_Snowflake_with_Stefan_WIlliams Summary.md",
       "title": "Buyer-Led MA Strategy at Snowflake with Stefan WIlliams"
+    },
+    {
+      "filename": "Corporate_Development_Strategy_Notions_MA_Approach_with_Hilary_Shirazi Summary.md",
+      "title": "Corporate Development Strategy Notions MA Approach with Hilary Shirazi"
     }
   ],
-  "generatedAt": "2025-10-12T09:28:38.798392"
+  "generatedAt": "2025-10-22T00:46:31.076137"
 }

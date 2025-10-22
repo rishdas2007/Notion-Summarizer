@@ -1,5 +1,8 @@
 # Banks Do DeFi Now Ft. Nassim Eddequiouaq
 
+**Citation:** "Banks Do DeFi Now Ft. Nassim Eddequiouaq." *Tokenized*, 06 Oct. 2025, <https://tokenized.simplecast.com/episodes/banks-do-defi-now-ft-nassim-eddequiouaq-_E3APerz>.
+
+
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)

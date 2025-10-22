@@ -1,5 +1,8 @@
 # Buyer-Led M&A™ Strategy at Snowflake with Stefan Williams
 
+**Citation:** "Buyer-Led M&A™ Strategy at Snowflake with Stefan WIlliams." *M&A Science*, 06 Oct. 2025, <https://sites.libsyn.com/88604/buyer-led-ma-strategy-at-snowflake-with-stefan-williams>.
+
+
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)
