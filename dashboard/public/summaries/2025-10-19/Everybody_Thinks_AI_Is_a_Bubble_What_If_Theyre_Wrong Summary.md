@@ -1,5 +1,8 @@
 # Everybody Thinks AI Is a Bubble. What If They're Wrong?
 
+**Citation:** "Everybody Thinks AI Is a Bubble. What If They’re Wrong?." *Plain English with Derek Thompson*, 17 Oct. 2025,
+
+
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)

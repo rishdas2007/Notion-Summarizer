@@ -1,5 +1,8 @@
 # Fintech at the Front, Onchain at the Back Ft. Eric Queathem & Marieke Flament
 
+**Citation:** "Fintech at the Front, Onchain at the Back Ft. Eric Queathem & Marieke Flament." *Tokenized*, 12 Oct. 2025, <https://tokenized.simplecast.com/episodes/fintech-at-the-front-onchain-at-the-back-ft-eric-queathem-marieke-flament-JLXU0rzs>.
+
+
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)

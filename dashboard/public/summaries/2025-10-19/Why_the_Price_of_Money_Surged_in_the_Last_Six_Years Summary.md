@@ -1,5 +1,8 @@
 # Why the Price of Money Surged in the Last Six Years
 
+**Citation:** "Why the Price of Money Surged in the Last Six Years." *Odd Lots*, 09 Oct. 2025, <https://omny.fm/shows/odd-lots/why-the-price-of-money-surged-in-the-last-6-years>.
+
+
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)

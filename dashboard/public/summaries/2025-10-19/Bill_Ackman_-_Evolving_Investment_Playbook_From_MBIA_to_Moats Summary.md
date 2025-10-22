@@ -1,5 +1,8 @@
 # Bill Ackman - Evolving Investment Playbook, From MBIA to Moats
 
+**Citation:** "Bill Ackman - Evolving Investment Playbook, From MBIA to Moats." *Value Investing with Legends*, 10 Oct. 2025, <https://valueinvestingwithlegends.libsyn.com/bill-ackman-evolving-investment-playbook-from-mbia-to-moats>.
+
+
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)

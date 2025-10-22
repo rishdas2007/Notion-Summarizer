@@ -1,5 +1,8 @@
 # Why the Trump Administration is Now Taking Equity Stakes in American Companies
 
+**Citation:** "Why the Trump Administration is Now Taking Equity Stakes in American Companies." *Odd Lots*, 16 Oct. 2025, <https://omny.fm/shows/odd-lots/why-the-trump-administration-is-now-taking-equity-stakes-in-american-companies>.
+
+
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)

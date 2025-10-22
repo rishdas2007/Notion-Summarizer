@@ -1,5 +1,8 @@
 # Andrew Ross Sorkin on the Stock Market Crash That Shattered America
 
+**Citation:** "Andrew Ross Sorkin on the Stock Market Crash That Shattered America." *Odd Lots*, 13 Oct. 2025, <https://omny.fm/shows/odd-lots/andrew-ross-sorkin-on-the-stock-market-crash-that-shattered-america>.
+
+
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)

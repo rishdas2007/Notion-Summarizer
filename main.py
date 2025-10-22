@@ -88,11 +88,18 @@ def main():
             
             # Convert to markdown
             markdown_content = converter.convert_page_to_markdown(page, blocks)
-            
+
             # Save individual episode
             with open(filepath, 'w', encoding='utf-8') as f:
                 f.write(markdown_content)
-            
+
+            # Save metadata for MLA citation generation
+            import json
+            metadata_filepath = filepath.replace('.md', '_metadata.json')
+            metadata = converter.extract_metadata_for_citation(page)
+            with open(metadata_filepath, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, indent=2)
+
             logging.info(f"Successfully saved: {filename}")
             successful_exports += 1
             

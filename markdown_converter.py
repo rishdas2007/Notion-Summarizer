@@ -608,3 +608,34 @@ class MarkdownConverter:
         """Generate filename for weekly summary"""
         week_str = f"{monday.strftime('%Y-%m-%d')}_to_{friday.strftime('%Y-%m-%d')}"
         return f"WEEKLY_SUMMARY_{week_str}.md"
+
+    def extract_metadata_for_citation(self, page):
+        """Extract metadata needed for MLA citation"""
+        properties = page.get("properties", {})
+
+        # Extract title
+        title = "Untitled Episode"
+        if "Episode" in properties and properties["Episode"].get("title"):
+            title = properties["Episode"]["title"][0].get("plain_text", "Untitled Episode")
+
+        # Extract show name
+        show = ""
+        if "Show" in properties and properties["Show"].get("rich_text"):
+            show = properties["Show"]["rich_text"][0].get("plain_text", "")
+
+        # Extract publish date
+        publish_date = ""
+        if "Episode publish date" in properties and properties["Episode publish date"].get("date"):
+            publish_date = properties["Episode publish date"]["date"].get("start", "")
+
+        # Extract show notes link
+        show_notes_link = ""
+        if "Show notes link" in properties:
+            show_notes_link = properties["Show notes link"].get("url", "")
+
+        return {
+            "title": title,
+            "show": show,
+            "publish_date": publish_date,
+            "show_notes_link": show_notes_link
+        }

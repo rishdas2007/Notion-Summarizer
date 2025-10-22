@@ -156,6 +156,17 @@ IMPORTANT: Output the summary as raw markdown text. Do NOT wrap the entire summa
             logging.error(f"Error reading file {episode_file}: {e}")
             return None
 
+        # Load metadata for MLA citation if available
+        metadata_file = episode_file.replace('.md', '_metadata.json')
+        metadata = None
+        if os.path.exists(metadata_file):
+            try:
+                import json
+                with open(metadata_file, 'r', encoding='utf-8') as f:
+                    metadata = json.load(f)
+            except Exception as e:
+                logging.warning(f"Could not load metadata file: {e}")
+
         # Parse and condense the content intelligently
         try:
             logging.info(f"🔍 Parsing episode content...")
@@ -203,8 +214,13 @@ IMPORTANT: Output the summary as raw markdown text. Do NOT wrap the entire summa
             summary_text = response.content[0].text
             summary_text = self.strip_markdown_code_block(summary_text)
 
+            # Prepend MLA citation if metadata available
+            if metadata:
+                citation = self.create_mla_citation(metadata)
+                summary_text = self.insert_citation(summary_text, citation)
+
             return summary_text
-            
+
         except Exception as e:
             logging.error(f"❌ Error generating summary for {os.path.basename(episode_file)}: {e}")
             return None
@@ -365,6 +381,56 @@ Focus on cross-episode synthesis and pattern recognition. Identify themes that s
                 logging.error(f"❌ Failed to generate summary for {os.path.basename(episode_file)}")
 
         return generated_summaries
+
+    def create_mla_citation(self, metadata):
+        """Create MLA citation from metadata"""
+        title = metadata.get('title', 'Untitled Episode')
+        show = metadata.get('show', '')
+        publish_date = metadata.get('publish_date', '')
+        show_notes_link = metadata.get('show_notes_link', '')
+
+        # Format date for MLA (Day Month Year)
+        formatted_date = ''
+        if publish_date:
+            try:
+                dt = datetime.strptime(publish_date[:10], '%Y-%m-%d')
+                formatted_date = dt.strftime('%d %b. %Y')
+            except:
+                formatted_date = publish_date[:10]  # Fallback
+
+        # MLA format: "Episode Title." Show Name, Date, URL.
+        citation_parts = []
+        citation_parts.append(f'"{title}."')
+        if show:
+            citation_parts.append(f'*{show}*,')
+        if formatted_date:
+            citation_parts.append(f'{formatted_date},')
+        if show_notes_link:
+            citation_parts.append(f'<{show_notes_link}>.')
+
+        citation = ' '.join(citation_parts)
+        return f"**Citation:** {citation}\n"
+
+    def insert_citation(self, summary_text, citation):
+        """Insert MLA citation after the title in the summary"""
+        lines = summary_text.split('\n')
+
+        # Find the title line (first # heading)
+        title_index = -1
+        for i, line in enumerate(lines):
+            if line.startswith('# '):
+                title_index = i
+                break
+
+        if title_index == -1:
+            # No title found, prepend to the beginning
+            return citation + "\n" + summary_text
+
+        # Insert citation after title and a blank line
+        lines.insert(title_index + 1, '')
+        lines.insert(title_index + 2, citation)
+
+        return '\n'.join(lines)
 
 def main():
     """Main function to run individual episode summary generation"""
