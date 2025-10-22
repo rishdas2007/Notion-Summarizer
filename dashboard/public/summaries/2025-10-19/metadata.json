@@ -1,18 +1,30 @@
 {
-  "episodeCount": 3,
+  "episodeCount": 6,
   "episodes": [
     {
       "filename": "Andrew_Ross_Sorkin_on_the_Stock_Market_Crash_That_Shattered_America Summary.md",
       "title": "Andrew Ross Sorkin on the Stock Market Crash That Shattered America"
     },
     {
+      "filename": "Bill_Ackman_-_Evolving_Investment_Playbook_From_MBIA_to_Moats Summary.md",
+      "title": "Bill Ackman - Evolving Investment Playbook From MBIA to Moats"
+    },
+    {
       "filename": "Everybody_Thinks_AI_Is_a_Bubble_What_If_Theyre_Wrong Summary.md",
       "title": "Everybody Thinks AI Is a Bubble What If Theyre Wrong"
+    },
+    {
+      "filename": "Fintech_at_the_Front_Onchain_at_the_Back_Ft_Eric_Queathem__Marieke_Flament Summary.md",
+      "title": "Fintech at the Front Onchain at the Back Ft Eric Queathem Marieke Flament"
+    },
+    {
+      "filename": "Why_the_Price_of_Money_Surged_in_the_Last_Six_Years Summary.md",
+      "title": "Why the Price of Money Surged in the Last Six Years"
     },
     {
       "filename": "Why_the_Trump_Administration_is_Now_Taking_Equity_Stakes_in_American_Companies Summary.md",
       "title": "Why the Trump Administration is Now Taking Equity Stakes in American Companies"
     }
   ],
-  "generatedAt": "2025-10-19T15:41:10.927623"
+  "generatedAt": "2025-10-22T00:00:13.702701"
 }

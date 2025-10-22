@@ -8,22 +8,22 @@ class NotionClient:
         self.database_id = DATABASE_ID
         
     def get_weekly_episodes(self):
-        """Fetch episodes from the past Monday-Friday"""
+        """Fetch episodes from the past Monday-Friday based on when they were listened to (Last snip date)"""
         monday, friday = get_week_date_range()
-        
+
         try:
             response = self.client.databases.query(
                 database_id=self.database_id,
                 filter={
                     "and": [
                         {
-                            "property": "Episode publish date",
+                            "property": "Last snip date",
                             "date": {
                                 "on_or_after": monday.isoformat()
                             }
                         },
                         {
-                            "property": "Episode publish date", 
+                            "property": "Last snip date",
                             "date": {
                                 "on_or_before": friday.isoformat()
                             }
@@ -32,7 +32,7 @@ class NotionClient:
                 },
                 sorts=[
                     {
-                        "property": "Episode publish date",
+                        "property": "Last snip date",
                         "direction": "ascending"
                     }
                 ]
